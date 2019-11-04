@@ -2,25 +2,20 @@ package dk.surfstation.controller
 
 import dk.surfstation.client.BookingClient
 import dk.surfstation.configuration.BookingConfiguration
-import dk.surfstation.domain.Bookings
+import dk.surfstation.domain.OccasionRecords
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
+import io.micronaut.views.ModelAndView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Controller
 class BookingController(private val bookingClient: BookingClient, private val bookingConfiguration: BookingConfiguration) {
     @Get("/bookings")
-    fun bookings(): Bookings {
+    fun bookings(): ModelAndView<Map<String, List<OccasionRecords>>> {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val now = LocalDateTime.now().format(formatter)
         val bookings = bookingClient.fetchBookings(now, now, bookingConfiguration.authenticationCode)
-        bookings.accessControlRecords.occasionRecords.forEach {
-            println(it.facilityName)
-            println("${it.fomKlo} - ${it.tomKlo}")
-            println(it.objectName)
-            println("-----------------------------------------")
-        }
-        return bookings
+        return ModelAndView("bookings", mapOf("records" to bookings.accessControlRecords.occasionRecords))
     }
 }
