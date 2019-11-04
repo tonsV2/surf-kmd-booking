@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: dk.surfstation
+---
+testFramework: kotlintest
+sourceLanguage: kotlin
