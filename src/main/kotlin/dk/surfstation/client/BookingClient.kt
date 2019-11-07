@@ -8,5 +8,5 @@ import io.micronaut.http.client.annotation.Client
 @Client(BookingConfiguration.URL)
 interface BookingClient {
     @Get(BookingConfiguration.PATH)
-    fun fetchBookings(dateTimeFrom: String, dateTimeTo: String, authenticationCode: String): Bookings
+    fun fetchBookings(fromDate: String, toDate: String, authenticationCode: String): Bookings
 }

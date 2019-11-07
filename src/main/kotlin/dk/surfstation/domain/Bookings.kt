@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Bookings(@JsonProperty("AccessControlRecords") val accessControlRecords: AccessControlRecords, val resultCode: Int, val resultText: String?)
 
-data class AccessControlRecords(@JsonProperty("OccasionRecords") val occasionRecords: List<OccasionRecords>)
+data class AccessControlRecords(@JsonProperty("OccasionRecords") val occasionRecords: MutableList<OccasionRecords>)
 
 data class OccasionRecords(
         @JsonProperty("Type") val type: String,
