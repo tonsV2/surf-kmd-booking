@@ -8,7 +8,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.*
 import javax.inject.Singleton
 
 @Singleton
@@ -18,6 +17,14 @@ class BookingServiceImpl(private val bookingClient: BookingClient, private val b
         val fromDateString = fromDate.format(formatter)
         val toDateString = toDate.format(formatter)
         val bookings = bookingClient.fetchBookings(fromDateString, toDateString, bookingConfiguration.authenticationCode)
+        bookings.accessControlRecords.occasionRecords.removeIf {
+            val split = it.fomKlo.split(":")
+            val hour = split[0].toInt()
+            val minute = split[1].toInt()
+            val fromTime = LocalTime.of(hour, minute, 0)
+            val now = LocalTime.now(ZoneId.of("Europe/Copenhagen"))
+            fromTime.isBefore(now)
+        }
         bookings.accessControlRecords.occasionRecords.sortBy { it.fomKlo }
         return bookings
     }
