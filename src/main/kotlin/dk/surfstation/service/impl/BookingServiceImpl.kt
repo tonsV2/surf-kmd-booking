@@ -16,7 +16,14 @@ class BookingServiceImpl(private val bookingClient: BookingClient, private val b
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val fromDateString = fromDate.format(formatter)
         val toDateString = toDate.format(formatter)
-        val bookings = bookingClient.fetchBookings(fromDateString, toDateString, bookingConfiguration.authenticationCode)
+        val authenticationCode = bookingConfiguration.authenticationCode
+        val bookings = bookingClient.fetchBookings(fromDateString, toDateString, authenticationCode)
+        removeRecordsStartingBeforeNow(bookings)
+        sortRecords(bookings)
+        return bookings
+    }
+
+    private fun removeRecordsStartingBeforeNow(bookings: Bookings) {
         bookings.accessControlRecords.occasionRecords.removeIf {
             val split = it.fomKlo.split(":")
             val hour = split[0].toInt()
@@ -25,7 +32,9 @@ class BookingServiceImpl(private val bookingClient: BookingClient, private val b
             val now = LocalTime.now(ZoneId.of("Europe/Copenhagen"))
             fromTime.isBefore(now)
         }
+    }
+
+    private fun sortRecords(bookings: Bookings) {
         bookings.accessControlRecords.occasionRecords.sortBy { it.fomKlo }
-        return bookings
     }
 }
