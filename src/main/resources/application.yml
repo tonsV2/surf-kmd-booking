@@ -1,6 +1,12 @@
 micronaut:
   application:
     name: kmd-booking
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: "/css/**"
+        paths: "classpath:css"
 
 booking:
   authenticationCode: ${AUTHENTICATION_CODE}
