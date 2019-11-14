@@ -15,7 +15,6 @@ data class OccasionRecords(
         @JsonProperty("PartOfObjectId") val partOfObjectId: String,
         @JsonProperty("PartOfObjectName") val partOfObjectName: String,
         @JsonProperty("FacilityName") val facilityName: String,
-        @JsonProperty("ObjectName") val objectName: String,
         @JsonProperty("BookFromDate") val bookFromDate: String,
         @JsonProperty("BookToDate") val bookToDate: String,
         @JsonProperty("OccasionDate") val occasionDate: String,
@@ -42,4 +41,8 @@ data class OccasionRecords(
         @JsonProperty("Text4") val text4: String,
         @JsonProperty("EndUser") val endUser: String,
         @JsonProperty("Activity") val activity: String
-)
+) {
+    @JsonProperty("ObjectName")
+    val objectName: String = ""
+        get() = field.replace("LYIB - ", "")
+}
