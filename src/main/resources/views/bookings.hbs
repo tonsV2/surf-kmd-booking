@@ -7,10 +7,11 @@
     </head>
     <body>
     {{#each records}}
-        <div class="row">{{customerName}} - {{activity}}</div>
-        <div class="row">{{fomKlo}} - {{tomKlo}}</div>
-        <div class="row">{{objectName}}</div>
-        <hr/>
+        <div class="time-and-activity">{{fomKlo}} - {{tomKlo}}, {{customerName}} - {{activity}}</div>
+        <div class="location">{{objectName}}</div>
+        {{#unless @last}}
+            <hr/>
+        {{/unless}}
     {{/each}}
     </body>
 </html>
