@@ -9,4 +9,6 @@ micronaut:
         paths: "classpath:css"
 
 booking:
-  authenticationCode: ${AUTHENTICATION_CODE}
+  authenticationCode: ${BOOKING_AUTHENTICATION_CODE}
+  url: https://booking-ltk.kmd.dk
+  path: /kmd_webapi/api/Monitor/GetFilteredAccessControlRecords?dateTimeFrom={fromDate}&dateTimeTo={toDate}&facility=&facilityObject=&partObject=&authenticationCode={authenticationCode}&type=json

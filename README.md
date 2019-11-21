@@ -18,6 +18,7 @@ docker run -it -p 8080:8080 --env-file .env registry.heroku.com/surf-kmd-booking
 ```
 Or with docker-compose
 ```bash
+./gradlew jibDockerBuild
 docker-compose up
 ```
 
